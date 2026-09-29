@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block title %}
+Login | PocketSmart AI
+{% endblock %}
+
+{% block content %}
+
+<section class="auth-section">
+
+    <div class="auth-card">
+
+        <div class="auth-heading">
+
+            <span class="eyebrow">
+                Welcome back
+            </span>
+
+            <h1>
+                Login to PocketSmart AI
+            </h1>
+
+            <p>
+                Access your personalized recommendations.
+            </p>
+
+        </div>
+
+
+        <form
+            id="login-form"
+            class="form"
+        >
+
+            <label>
+                Email
+
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="you@example.com"
+                    required
+                >
+
+            </label>
+
+
+            <label>
+                Password
+
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Your password"
+                    required
+                >
+
+            </label>
+
+
+            <button
+                type="submit"
+                class="btn btn-primary btn-full"
+            >
+                Login
+            </button>
+
+        </form>
+
+
+        <p class="auth-footer">
+            Don't have an account?
+
+            <a href="/register">
+                Create one
+            </a>
+        </p>
+
+    </div>
+
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+
+document
+    .getElementById("login-form")
+    .addEventListener("submit", async function(event) {
+
+        event.preventDefault();
+
+        const form = event.target;
+
+        const data = {
+            email: form.email.value,
+            password: form.password.value
+        };
+
+        try {
+
+            const response = await fetch(
+                "/api/login",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    credentials: "include",
+                    body: JSON.stringify(data)
+                }
+            );
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(
+                    result.detail || "Login failed."
+                );
+            }
+
+            window.location.href = "/dashboard";
+
+        } catch (error) {
+
+            showToast(
+                error.message,
+                "error"
+            );
+        }
+
+    });
+
+</script>
+
+{% endblock %}

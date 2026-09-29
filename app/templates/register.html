@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+
+{% block title %}
+Register | PocketSmart AI
+{% endblock %}
+
+{% block content %}
+
+<section class="auth-section">
+
+    <div class="auth-card">
+
+        <div class="auth-heading">
+
+            <span class="eyebrow">
+                Get started
+            </span>
+
+            <h1>
+                Create your account
+            </h1>
+
+            <p>
+                Save your recommendation history and
+                personalize your planning experience.
+            </p>
+
+        </div>
+
+
+        <form
+            id="register-form"
+            class="form"
+        >
+
+            <label>
+                Full name
+
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="Your name"
+                    minlength="2"
+                    required
+                >
+
+            </label>
+
+
+            <label>
+                Email
+
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="you@example.com"
+                    required
+                >
+
+            </label>
+
+
+            <label>
+                Password
+
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="At least 8 characters"
+                    minlength="8"
+                    required
+                >
+
+            </label>
+
+
+            <button
+                type="submit"
+                class="btn btn-primary btn-full"
+            >
+                Create Account
+            </button>
+
+        </form>
+
+
+        <p class="auth-footer">
+            Already have an account?
+
+            <a href="/login">
+                Login
+            </a>
+        </p>
+
+    </div>
+
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+
+document
+    .getElementById("register-form")
+    .addEventListener("submit", async function(event) {
+
+        event.preventDefault();
+
+        const form = event.target;
+
+        const data = {
+            name: form.name.value,
+            email: form.email.value,
+            password: form.password.value
+        };
+
+        try {
+
+            const response = await fetch(
+                "/api/register",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    credentials: "include",
+                    body: JSON.stringify(data)
+                }
+            );
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(
+                    result.detail || "Registration failed."
+                );
+            }
+
+            window.location.href = "/dashboard";
+
+        } catch (error) {
+
+            showToast(
+                error.message,
+                "error"
+            );
+
+        }
+
+    });
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,227 @@
+{% extends "base.html" %}
+
+{% block title %}
+Dashboard | PocketSmart AI
+{% endblock %}
+
+{% block content %}
+
+<section class="section">
+
+    <div class="container">
+
+        <div class="dashboard-header">
+
+            <div>
+
+                <span class="eyebrow">
+                    Your workspace
+                </span>
+
+                <h1>
+                    <span id="user-name">
+                        Your Dashboard
+                    </span>
+                </h1>
+
+                <p>
+                    Review your previous AI recommendations.
+                </p>
+
+            </div>
+
+            <div class="dashboard-actions">
+
+                <a
+                    href="/planner/home"
+                    class="btn btn-primary"
+                >
+                    New Plan
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="dashboard-message"
+            class="message hidden"
+        ></div>
+
+
+        <div
+            id="history-container"
+            class="history-list"
+        >
+
+            <div class="loading">
+                Loading your recommendations...
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+
+async function loadDashboard() {
+
+    try {
+
+        const sessionResponse = await fetch(
+            "/api/session-info",
+            {
+                credentials: "include"
+            }
+        );
+
+        if (!sessionResponse.ok) {
+            window.location.href = "/login";
+            return;
+        }
+
+        const session = await sessionResponse.json();
+
+        document.getElementById(
+            "user-name"
+        ).textContent =
+            `Hello, ${session.user.name}`;
+
+        const historyResponse = await fetch(
+            "/api/history",
+            {
+                credentials: "include"
+            }
+        );
+
+        const data =
+            await historyResponse.json();
+
+        const container =
+            document.getElementById(
+                "history-container"
+            );
+
+        if (
+            !data.history ||
+            data.history.length === 0
+        ) {
+
+            container.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-icon">✦</div>
+                    <h3>No recommendations yet</h3>
+                    <p>
+                        Create your first plan to see it here.
+                    </p>
+                    <a
+                        href="/planner/home"
+                        class="btn btn-primary"
+                    >
+                        Create a Plan
+                    </a>
+                </div>
+            `;
+
+            return;
+        }
+
+        container.innerHTML =
+            data.history
+                .map(item => {
+
+                    const response =
+                        item.response || {};
+
+                    return `
+                        <article class="history-card">
+
+                            <div class="history-icon">
+                                ${
+                                    item.planner === "home"
+                                    ? "🏠"
+                                    : item.planner === "party"
+                                    ? "🎉"
+                                    : "💎"
+                                }
+                            </div>
+
+                            <div class="history-content">
+
+                                <div class="history-top">
+
+                                    <h3>
+                                        ${
+                                            item.planner
+                                                .charAt(0)
+                                                .toUpperCase()
+                                                + item.planner.slice(1)
+                                        }
+                                        Planner
+                                    </h3>
+
+                                    <span>
+                                        ₹${Number(
+                                            response.budget || 0
+                                        ).toLocaleString("en-IN")}
+                                    </span>
+
+                                </div>
+
+                                <p>
+                                    ${
+                                        response.summary ||
+                                        "Recommendation plan"
+                                    }
+                                </p>
+
+                                <small>
+                                    ${
+                                        item.created_at
+                                            ? new Date(
+                                                item.created_at
+                                              ).toLocaleString()
+                                            : ""
+                                    }
+                                </small>
+
+                            </div>
+
+                            <a
+                                href="/api/recommendations-details/${item.id}"
+                                target="_blank"
+                                class="btn btn-small btn-secondary"
+                            >
+                                View
+                            </a>
+
+                        </article>
+                    `;
+
+                })
+                .join("");
+
+    } catch (error) {
+
+        document.getElementById(
+            "history-container"
+        ).innerHTML = `
+            <div class="message error">
+                Unable to load dashboard.
+            </div>
+        `;
+    }
+}
+
+loadDashboard();
+
+</script>
+
+{% endblock %}

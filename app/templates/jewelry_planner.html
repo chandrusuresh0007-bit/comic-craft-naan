@@ -1,0 +1,226 @@
+{% extends "base.html" %}
+
+{% block title %}
+Jewelry Planner | PocketSmart AI
+{% endblock %}
+
+{% block content %}
+
+<section class="planner-section">
+
+    <div class="container planner-grid">
+
+        <div class="planner-intro">
+
+            <span class="eyebrow">
+                Jewelry Planner
+            </span>
+
+            <h1>
+                Find the right jewelry for your occasion.
+            </h1>
+
+            <p>
+                Describe your style and occasion, then optionally
+                upload an outfit image for multimodal styling
+                recommendations.
+            </p>
+
+            <div class="planner-benefits">
+
+                <div>✓ Occasion-aware recommendations</div>
+                <div>✓ Style matching</div>
+                <div>✓ Metal preference</div>
+                <div>✓ Optional outfit image analysis</div>
+
+            </div>
+
+        </div>
+
+
+        <div class="planner-card">
+
+            <form
+                id="jewelry-form"
+                class="form"
+                enctype="multipart/form-data"
+            >
+
+                <label>
+                    Budget (₹)
+
+                    <input
+                        type="number"
+                        name="budget"
+                        min="1"
+                        step="1"
+                        placeholder="25000"
+                        required
+                    >
+
+                </label>
+
+
+                <label>
+                    Occasion
+
+                    <select name="occasion">
+
+                        <option value="wedding">
+                            Wedding
+                        </option>
+
+                        <option value="engagement">
+                            Engagement
+                        </option>
+
+                        <option value="party">
+                            Party
+                        </option>
+
+                        <option value="festival">
+                            Festival
+                        </option>
+
+                        <option value="date night">
+                            Date Night
+                        </option>
+
+                        <option value="formal event">
+                            Formal Event
+                        </option>
+
+                    </select>
+
+                </label>
+
+
+                <label>
+                    Style
+
+                    <select name="style">
+
+                        <option value="elegant">
+                            Elegant
+                        </option>
+
+                        <option value="minimal">
+                            Minimal
+                        </option>
+
+                        <option value="traditional">
+                            Traditional
+                        </option>
+
+                        <option value="modern">
+                            Modern
+                        </option>
+
+                        <option value="statement">
+                            Statement
+                        </option>
+
+                    </select>
+
+                </label>
+
+
+                <label>
+                    Preferred Metal
+
+                    <select name="metal">
+
+                        <option value="any">
+                            Any
+                        </option>
+
+                        <option value="gold">
+                            Gold
+                        </option>
+
+                        <option value="silver">
+                            Silver
+                        </option>
+
+                        <option value="rose gold">
+                            Rose Gold
+                        </option>
+
+                        <option value="platinum">
+                            Platinum
+                        </option>
+
+                    </select>
+
+                </label>
+
+
+                <label>
+                    Outfit Image
+                    <span class="label-help">
+                        Optional — JPG, PNG or WEBP, max 5 MB
+                    </span>
+
+                    <input
+                        type="file"
+                        name="outfit_image"
+                        accept="image/jpeg,image/png,image/webp"
+                    >
+
+                </label>
+
+
+                <label>
+                    Additional Notes
+
+                    <textarea
+                        name="notes"
+                        rows="4"
+                        placeholder="Color, neckline, preferences..."
+                    ></textarea>
+
+                </label>
+
+
+                <button
+                    type="submit"
+                    class="btn btn-primary btn-full"
+                >
+                    Generate Jewelry Plan
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="container">
+
+        <div
+            id="results"
+            class="results hidden"
+        ></div>
+
+    </div>
+
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script src="{{ url_for('static', path='js/planners.js') }}"></script>
+
+<script>
+
+setupJewelryPlanner();
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,3 @@
+"""
+PocketSmart AI application package.
+"""

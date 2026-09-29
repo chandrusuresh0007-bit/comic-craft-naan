@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {% block title %}PocketSmart AI{% endblock %}
+    </title>
+
+    <meta
+        name="description"
+        content="PocketSmart AI budget-aware recommendation assistant"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', path='css/style.css') }}"
+    >
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="container nav-inner">
+
+        <a
+            href="/"
+            class="brand"
+        >
+            <span class="brand-icon">✦</span>
+            PocketSmart AI
+        </a>
+
+        <nav class="nav-links">
+
+            <a href="/">Home</a>
+
+            <a href="/planner/home">
+                Home Planner
+            </a>
+
+            <a href="/planner/party">
+                Party Planner
+            </a>
+
+            <a href="/planner/jewelry">
+                Jewelry Planner
+            </a>
+
+            <a href="/dashboard">
+                Dashboard
+            </a>
+
+            <a
+                href="/login"
+                id="nav-login"
+            >
+                Login
+            </a>
+
+            <a
+                href="/register"
+                id="nav-register"
+            >
+                Register
+            </a>
+
+            <button
+                id="nav-logout"
+                class="btn btn-small btn-outline hidden"
+                type="button"
+            >
+                Logout
+            </button>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+<main>
+
+    {% block content %}
+    {% endblock %}
+
+</main>
+
+
+<footer class="footer">
+
+    <div class="container">
+
+        <div>
+            <strong>PocketSmart AI</strong>
+            <p>
+                Smart budget planning for everyday decisions.
+            </p>
+        </div>
+
+        <div class="footer-links">
+            <a href="/">Home</a>
+            <a href="/planner/home">Home</a>
+            <a href="/planner/party">Party</a>
+            <a href="/planner/jewelry">Jewelry</a>
+        </div>
+
+    </div>
+
+    <div class="copyright">
+        © 2026 PocketSmart AI
+    </div>
+
+</footer>
+
+
+<div
+    id="toast"
+    class="toast"
+></div>
+
+
+<script
+    src="{{ url_for('static', path='js/app.js') }}"
+></script>
+
+{% block scripts %}
+{% endblock %}
+
+</body>
+</html>

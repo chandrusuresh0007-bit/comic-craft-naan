@@ -1,0 +1,215 @@
+{% extends "base.html" %}
+
+{% block title %}
+Party Planner | PocketSmart AI
+{% endblock %}
+
+{% block content %}
+
+<section class="planner-section">
+
+    <div class="container planner-grid">
+
+        <div class="planner-intro">
+
+            <span class="eyebrow">
+                Party Planner
+            </span>
+
+            <h1>
+                Plan the celebration.
+                Control the budget.
+            </h1>
+
+            <p>
+                Balance venue, food, decoration and extras
+                around the number of guests.
+            </p>
+
+            <div class="planner-benefits">
+
+                <div>✓ Venue allocation</div>
+                <div>✓ Food planning</div>
+                <div>✓ Decoration</div>
+                <div>✓ Entertainment & extras</div>
+
+            </div>
+
+        </div>
+
+
+        <div class="planner-card">
+
+            <form
+                id="party-form"
+                class="form"
+            >
+
+                <label>
+                    Total Budget (₹)
+
+                    <input
+                        type="number"
+                        name="budget"
+                        min="1"
+                        step="1"
+                        placeholder="75000"
+                        required
+                    >
+
+                </label>
+
+
+                <label>
+                    Number of Guests
+
+                    <input
+                        type="number"
+                        name="guests"
+                        min="1"
+                        step="1"
+                        placeholder="50"
+                        required
+                    >
+
+                </label>
+
+
+                <label>
+                    Event Type
+
+                    <select name="event_type">
+
+                        <option value="birthday">
+                            Birthday
+                        </option>
+
+                        <option value="wedding">
+                            Wedding
+                        </option>
+
+                        <option value="engagement">
+                            Engagement
+                        </option>
+
+                        <option value="anniversary">
+                            Anniversary
+                        </option>
+
+                        <option value="corporate">
+                            Corporate
+                        </option>
+
+                        <option value="family gathering">
+                            Family Gathering
+                        </option>
+
+                    </select>
+
+                </label>
+
+
+                <label>
+                    City
+
+                    <input
+                        type="text"
+                        name="city"
+                        placeholder="Chennai"
+                    >
+
+                </label>
+
+
+                <label>
+                    Preferred Venue
+
+                    <input
+                        type="text"
+                        name="venue"
+                        placeholder="Hotel, hall, outdoor..."
+                    >
+
+                </label>
+
+
+                <label>
+                    Food Preference
+
+                    <select name="food_preference">
+
+                        <option value="mixed">
+                            Mixed
+                        </option>
+
+                        <option value="vegetarian">
+                            Vegetarian
+                        </option>
+
+                        <option value="non-vegetarian">
+                            Non-Vegetarian
+                        </option>
+
+                        <option value="vegan">
+                            Vegan
+                        </option>
+
+                    </select>
+
+                </label>
+
+
+                <label>
+                    Additional Notes
+
+                    <textarea
+                        name="notes"
+                        rows="4"
+                        placeholder="Theme, special requirements..."
+                    ></textarea>
+
+                </label>
+
+
+                <button
+                    type="submit"
+                    class="btn btn-primary btn-full"
+                >
+                    Generate Party Plan
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="container">
+
+        <div
+            id="results"
+            class="results hidden"
+        ></div>
+
+    </div>
+
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script src="{{ url_for('static', path='js/planners.js') }}"></script>
+
+<script>
+
+setupPartyPlanner();
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,245 @@
+{% extends "base.html" %}
+
+{% block title %}
+Home Interior Planner | PocketSmart AI
+{% endblock %}
+
+{% block content %}
+
+<section class="planner-section">
+
+    <div class="container planner-grid">
+
+        <div class="planner-intro">
+
+            <span class="eyebrow">
+                Home Interior
+            </span>
+
+            <h1>
+                Build your ideal space without overspending.
+            </h1>
+
+            <p>
+                Tell PocketSmart AI your budget, rooms and
+                preferred style. We'll create a practical
+                recommendation plan.
+            </p>
+
+            <div class="planner-benefits">
+
+                <div>✓ Furniture suggestions</div>
+                <div>✓ Decor ideas</div>
+                <div>✓ Lighting recommendations</div>
+                <div>✓ Storage planning</div>
+
+            </div>
+
+        </div>
+
+
+        <div class="planner-card">
+
+            <form
+                id="home-form"
+                class="form"
+            >
+
+                <label>
+                    Budget (₹)
+
+                    <input
+                        type="number"
+                        name="budget"
+                        min="1"
+                        step="1"
+                        placeholder="50000"
+                        required
+                    >
+
+                </label>
+
+
+                <fieldset>
+
+                    <legend>
+                        Rooms
+                    </legend>
+
+                    <div class="checkbox-grid">
+
+                        <label class="checkbox">
+                            <input
+                                type="checkbox"
+                                name="rooms"
+                                value="living room"
+                                checked
+                            >
+                            Living Room
+                        </label>
+
+                        <label class="checkbox">
+                            <input
+                                type="checkbox"
+                                name="rooms"
+                                value="bedroom"
+                            >
+                            Bedroom
+                        </label>
+
+                        <label class="checkbox">
+                            <input
+                                type="checkbox"
+                                name="rooms"
+                                value="kitchen"
+                            >
+                            Kitchen
+                        </label>
+
+                        <label class="checkbox">
+                            <input
+                                type="checkbox"
+                                name="rooms"
+                                value="balcony"
+                            >
+                            Balcony
+                        </label>
+
+                    </div>
+
+                </fieldset>
+
+
+                <label>
+                    Style
+
+                    <select name="style">
+
+                        <option value="modern">
+                            Modern
+                        </option>
+
+                        <option value="minimal">
+                            Minimal
+                        </option>
+
+                        <option value="traditional">
+                            Traditional
+                        </option>
+
+                        <option value="bohemian">
+                            Bohemian
+                        </option>
+
+                        <option value="luxury">
+                            Luxury
+                        </option>
+
+                    </select>
+
+                </label>
+
+
+                <fieldset>
+
+                    <legend>
+                        Priorities
+                    </legend>
+
+                    <div class="checkbox-grid">
+
+                        <label class="checkbox">
+                            <input
+                                type="checkbox"
+                                name="priorities"
+                                value="storage"
+                            >
+                            Storage
+                        </label>
+
+                        <label class="checkbox">
+                            <input
+                                type="checkbox"
+                                name="priorities"
+                                value="comfort"
+                            >
+                            Comfort
+                        </label>
+
+                        <label class="checkbox">
+                            <input
+                                type="checkbox"
+                                name="priorities"
+                                value="lighting"
+                            >
+                            Lighting
+                        </label>
+
+                        <label class="checkbox">
+                            <input
+                                type="checkbox"
+                                name="priorities"
+                                value="decor"
+                            >
+                            Decor
+                        </label>
+
+                    </div>
+
+                </fieldset>
+
+
+                <label>
+                    Additional notes
+
+                    <textarea
+                        name="notes"
+                        rows="4"
+                        placeholder="Tell us anything else..."
+                    ></textarea>
+
+                </label>
+
+
+                <button
+                    type="submit"
+                    class="btn btn-primary btn-full"
+                >
+                    Generate Recommendations
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="container">
+
+        <div
+            id="results"
+            class="results hidden"
+        ></div>
+
+    </div>
+
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script src="{{ url_for('static', path='js/planners.js') }}"></script>
+
+<script>
+
+setupHomePlanner();
+
+</script>
+
+{% endblock %}
